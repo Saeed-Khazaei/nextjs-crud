@@ -50,10 +50,8 @@ The server responds with the following payload:
 
 ```json
 {
-    {
-        "id":"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
-        "name": "John Doe"
-    }
+  "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+  "name": "John Doe"
 }
 ```
 
