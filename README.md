@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js CRUD Application for Users
 
-## Getting Started
+This is a simple CRUD (Create, Read, Update, Delete) application for managing user data, built with Next.js.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Create**: Add new users with name.
+- **Read**: View a list of all users.
+- **Update**: Edit existing user information.
+- **Delete**: Remove users from the system.
+
+## Project Structure
+
+| src
+├── db # Database
+├── api # API routes for CRUD operations
+│ └── users # User routes handlers
+├── types # Types
+└── utils # Global utils files
+
+## API Routes
+
+The application includes API routes for performing CRUD operations on users:
+
+`GET /api/users` - Fetch all users
+`POST /api/users` - Create a new user
+`GET /api/users/[id]` - Fetch a user by ID
+`PUT /api/users/[id]` - Update a user by ID
+`DELETE /api/users/[id]` - Delete a user by ID
+
+## DTO Contract
+
+The application follows a DTO (Data Transfer Object) pattern for communication between the client (consumer) and the server. Here's the DTO contract for creating a new user:
+
+### Request (Client -> Server)
+
+The client sends a POST request to /api/users with the following payload:
+
+```json
+{
+  "name": "John Doe"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- name: A string representing the name of the user.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Response (Server -> Client)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The server responds with the following payload:
 
-## Learn More
+```json
+{
+    {
+        "id":"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+        "name": "John Doe"
+    }
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+name: A string representing the name of the user.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- id: A unique string identifier for the user.
+- name: The name of the user (same as in the request).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This contract ensures that any client communicating with the server to create a user must send an object with a name field, and the server will respond with the user's id and name.
