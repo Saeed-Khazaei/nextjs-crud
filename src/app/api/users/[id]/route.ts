@@ -48,4 +48,25 @@ const PUT = async (request: Request, context: { params: Params }) => {
   return NextResponse.json(modifiedUser);
 };
 
-export { GET, PUT };
+const DELETE = async (request: Request, context: { params: Params }) => {
+  const { id } = context.params;
+
+  const users = await parseJsonFile<IdWrapper<User>[]>(USERS_DIRECTORY);
+
+  if (!id) {
+    return NextResponse.json({ error: "not found" }, { status: 404 });
+  }
+
+  const user = users.find((user) => user.id === id);
+  if (!user) {
+    return NextResponse.json({ error: "not found" }, { status: 404 });
+  }
+
+  const modifiedUsers = users.filter((i) => i.id !== id);
+
+  await fs.writeFileSync(USERS_DIRECTORY, JSON.stringify(modifiedUsers));
+
+  return NextResponse.json({ message: "deleted" });
+};
+
+export { DELETE, GET, PUT };
